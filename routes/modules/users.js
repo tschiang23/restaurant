@@ -2,6 +2,11 @@ const router = require('express').Router()
 const User = require('../../models/user')
 const passport = require('passport')
 
+router.get('/logout', (req, res) => {
+  //req.logOut() passport提供的
+  req.logOut(() => res.render('login'))
+})
+
 router.get('/login', (req, res) => {
   res.render('login')
 })
