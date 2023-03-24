@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
+const bcrypt = require('bcrypt')
 
 module.exports = (app) => {
   // 初始化 Passport 模組
@@ -20,7 +21,9 @@ module.exports = (app) => {
             return done(null, false, { message: 'Email or password incorrect' })
           }
 
-          if (foundUser.password !== password) {
+          const isMatch = await bcrypt.compare(password, foundUser.password)
+
+          if (!isMatch) {
             //(err,user,{message})
             return done(null, false, { message: 'Email or password incorrect' })
           }

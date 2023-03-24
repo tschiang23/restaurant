@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../../models/user')
 const passport = require('passport')
+const bcrypt = require('bcrypt')
 
 router.get('/logout', (req, res) => {
   //req.logOut() passport提供的
@@ -29,7 +30,7 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, confirmPassword } = req.body
+    let { name, email, password, confirmPassword } = req.body
     //註冊檢查
     const errors = []
     if (!name || !email || !password || !confirmPassword) {
@@ -47,6 +48,9 @@ router.post('/register', async (req, res) => {
         confirmPassword,
       })
     }
+
+    const hash = await bcrypt.hash(password, 10)
+    password = hash
 
     const foundUser = await User.findOne({ email })
     if (foundUser) {
