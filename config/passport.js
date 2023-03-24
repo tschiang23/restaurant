@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth2').Strategy
 
 module.exports = (app) => {
   // 初始化 Passport 模組
@@ -63,6 +64,53 @@ module.exports = (app) => {
         } catch (err) {
           return done(err, false)
         }
+      }
+    )
+  )
+
+  // google
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_Id,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          console.log(profile._json)
+          const { name, email } = profile._json
+
+          const foundUser = await User.findOne({ email })
+          if (foundUser) return done(null, foundUser)
+
+          const randomPassword = Math.random().toString(36).slice(-8)
+
+          const hash = await bcrypt.hash(randomPassword, 10)
+
+          const createdUser = await User.create({ name, email, password: hash })
+          return done(null, createdUser)
+        } catch (err) {
+          return done(err, false)
+        }
+
+        // User.findOne({ googleID: profile.id }).then((foundUser) => {
+        //   if (foundUser) {
+        //     done(null, foundUser)
+        //   } else {
+        //     new User({
+        //       name: profile.displayName,
+        //       googleID: profile.id,
+        //       thumbnail: profile.photos[0].value,
+        //       email: profile.emails[0].value,
+        //     })
+        //       .save()
+        //       .then((newUser) => {
+        //         console.log('New user created')
+        //         done(null, newUser)
+        //       })
+        //   }
+        // })
       }
     )
   )

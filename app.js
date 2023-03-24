@@ -8,7 +8,7 @@ const userPassport = require('./config/passport')
 const flash = require('connect-flash') // 引用套件
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT
 
 // handlebars
 app.engine(
@@ -45,6 +45,6 @@ app.use((req, res, next) => {
 })
 app.use(routes) //use router
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`)
 })
