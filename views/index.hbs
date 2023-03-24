@@ -1,0 +1,143 @@
+<!-- search bar -->
+<div class='container search-bar'>
+  <div class='search-bar-outer'>
+    <h4 class='mb-2'>尋找餐廳：</h4>
+    <div class='search-bar-inner row'>
+      <form action='/search'>
+        <div class='input-group'>
+          <input
+            type='text'
+            name='keyword'
+            class='form-control w-50'
+            placeholder='輸入餐廳、分類'
+            aria-label='Restaurant Name...'
+            value='{{keyword}}'
+            aria-describedby='search-button'
+          />
+          <div class='input-group-append'>
+            <button class='btn btn-major' type='submit' id='search-button'><i
+                class='fas fa-search'
+              ></i></button>
+          </div>
+
+           <select
+            class='form-select'
+            name='sortInfo'
+            onchange='this.form.submit()'
+          >
+            <option value='' selected>排序</option>
+            <option value='_id-desc'{{#ifeq sortInfo '_id-desc'}}{{/ifeq}}>最新餐廳</option>
+            <option value='name-asc'{{#ifeq sortInfo 'name-asc'}}{{/ifeq}}>A -> Z</option>
+            <option value='name-desc'{{#ifeq sortInfo 'name-desc'}}{{/ifeq}}>Z -> A</option>
+            <option value='rating-desc'{{#ifeq sortInfo 'rating-desc'}}{{/ifeq}}>評分</option>
+          </select>
+        </div>
+
+        
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- restaurant list -->
+<div id='data-panel' class='container mt-3'>
+
+  <div class='row'>
+    <div class='col-md-10 col-12 mx-auto'>
+      {{#if restaurants}}
+        <div class='row row-cols-sm-3 d-flex justify-content-between'>
+          {{#each restaurants}}
+            <div class='card p-0 mb-3' style='width: 18rem;'>
+              <a href='./restaurants/{{this._id}}'>
+                <img
+                  class='card-img-top'
+                  src='{{this.image}}'
+                  alt='{{this.name}}'
+                />
+              </a>
+
+              <div class='card-body p-3'>
+                <h6 class='card-title mb-2'>{{this.name}}</h6>
+
+                <div class='restaurant-category mb-2'>
+                  <i class='fas fa-utensils pr-2'></i>
+                  {{this.category}}
+                </div>
+                <h3>
+                  <span class='badge bg-danger'>
+                    <i class='fas fa-star fa-xs'>{{this.rating}}</i></span></h3>
+
+              </div>
+              <div class='card-footer text-end'>
+                <a
+                  class='btn btn-outline-secondary btn-sm me-2'
+                  href='./restaurants/{{this._id}}/edit'
+                  role='button'
+                >Edit</a><a
+                  class='btn btn-outline-secondary btn-sm me-2'
+                  href='./restaurants/{{this._id}}'
+                  role='button'
+                >Detail</a>
+
+                <form
+                  action='./restaurants/{{this._id}}?_method=DELETE'
+                  method='POST'
+                  style='display: inline;'
+                >
+                  <button
+                    class='btn btn-outline-danger btn-sm btn-delete'
+                    type='submit'
+                    data-bs-toggle='modal'
+                    data-bs-target='#exampleModal'
+                    data-id={{this._id}}
+                  >Delete</button>
+                </form>
+
+              </div>
+            </div>
+          {{/each}}
+
+        </div>
+      {{else}}
+        <h1 class='text-center'>Sorry! 找不到此餐廳</h1>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class='modal fade'
+  id='exampleModal'
+  tabindex='-1'
+  aria-labelledby='exampleModalLabel'
+  aria-hidden='true'
+>
+  <div class='modal-dialog modal-sm'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h1 class='modal-title fs-5' id='exampleModalLabel'></h1>
+        <button
+          type='button'
+          class='btn-close'
+          data-bs-dismiss='modal'
+          aria-label='Close'
+        ></button>
+      </div>
+      <div class='modal-body'>
+        <h2>確認要刪除嗎?</h2>
+      </div>
+      <div class='modal-footer'>
+        <form
+          id='modal-form'
+          action='./restaurants/{{this._id}}?_method=DELETE'
+          method='POST'
+          style='display: inline;'
+        >
+          <button type='submit' class='btn btn-danger'>確認</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
