@@ -4,6 +4,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const routes = require('./routes')
 require('./config/mongoose')
+const userPassport = require('./config/passport')
 
 const app = express()
 const port = 3000
@@ -30,6 +31,8 @@ app.use(
     saveUninitialized: true,
   })
 )
+
+userPassport(app)
 
 app.use(routes) //use router
 
