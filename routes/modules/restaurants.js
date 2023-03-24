@@ -9,19 +9,21 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const data = req.body
+  const userId = req.user._id
   if (req.body.name.trim().length === 0) {
     return res.redirect('back')
   }
 
-  return Restaurant.create({ ...data })
+  return Restaurant.create({ ...data, userId })
     .then(() => res.redirect('/'))
     .catch((error) => console.log(error))
 })
 
 // 瀏覽一筆資料
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
+  const _id = req.params.id
+  const userId = req.user._id
+  Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant) => {
       return res.render('detail', { restaurant })
@@ -31,8 +33,9 @@ router.get('/:id', (req, res) => {
 
 //修改一筆資料
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
+  const _id = req.params.id
+  const userId = req.user._id
+  Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant) => {
       return res.render('edit', { restaurant })
@@ -41,8 +44,9 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const _id = req.params.id
+  const userId = req.user._id
+  return Restaurant.findById({ _id, userId })
     .then((restaurant) => {
       for (const key in req.body) {
         for (const property in restaurant) {
@@ -60,8 +64,9 @@ router.put('/:id', (req, res) => {
 
 // 刪除一筆資料
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const _id = req.params.id
+  const userId = req.user._id
+  return Restaurant.findOne({ _id, userId })
     .then((restaurant) => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch((error) => console.log(error))

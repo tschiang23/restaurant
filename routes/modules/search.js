@@ -4,6 +4,7 @@ const Restaurant = require('../../models/restaurant')
 
 // 查詢資料
 router.get('/', (req, res) => {
+  const userId = req.user._id
   const keyword = req.query.keyword.trim()
   const sortInfo = req.query.sortInfo
   const sortInfoArray = sortInfo.split('-')
@@ -15,7 +16,8 @@ router.get('/', (req, res) => {
   const keywordRegex = new RegExp(keyword, 'i')
 
   Restaurant.find({
-    $or: [
+    $and: [
+      { userId: { $eq: userId } },
       { name: { $regex: keywordRegex } },
       { category: { $regex: keywordRegex } },
     ],
