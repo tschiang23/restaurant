@@ -7,8 +7,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "restaurantSeed": "node models/seeds/restaurantSeeder.js",
-    "userSeed": "node models/seeds/userSeeder.js"
+    "seed": "node models/seeds/restaurantSeeder.js"
   },
   "keywords": [],
   "author": "",
