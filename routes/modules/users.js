@@ -4,7 +4,10 @@ const passport = require('passport')
 
 router.get('/logout', (req, res) => {
   //req.logOut() passport提供的
-  req.logOut(() => res.redirect('/users/login'))
+  req.logOut(() => {
+    req.flash('success_msg', '你已經成功登出。')
+    return res.redirect('/users/login')
+  })
 })
 
 router.get('/login', (req, res) => {
@@ -16,6 +19,7 @@ router.post(
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login',
+    failureFlash: true,
   })
 )
 
@@ -26,6 +30,23 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body
+    //註冊檢查
+    const errors = []
+    if (!name || !email || !password || !confirmPassword) {
+      errors.push({ message: '所有欄位都是必填。' })
+    }
+    if (password !== confirmPassword) {
+      errors.push({ message: '密碼與確認密碼不相符！' })
+    }
+    if (errors.length) {
+      return res.render('register', {
+        errors,
+        name,
+        email,
+        password,
+        confirmPassword,
+      })
+    }
 
     const foundUser = await User.findOne({ email })
     if (foundUser) {

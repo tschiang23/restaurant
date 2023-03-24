@@ -12,11 +12,13 @@ module.exports = (app) => {
   passport.use(
     //passport 預設為username
     new LocalStrategy(
-      { usernameField: 'email' },
-      async (email, password, done) => {
+      { usernameField: 'email', passReqToCallback: true },
+      async (req, email, password, done) => {
         try {
           const foundUser = await User.findOne({ email })
-          if (!foundUser) return done(null, false)
+          if (!foundUser) {
+            return done(null, false, { message: 'Email or password incorrect' })
+          }
 
           if (foundUser.password !== password) {
             //(err,user,{message})
