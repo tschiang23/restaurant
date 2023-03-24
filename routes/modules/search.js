@@ -16,8 +16,8 @@ router.get('/', (req, res) => {
   const keywordRegex = new RegExp(keyword, 'i')
 
   Restaurant.find({
-    $and: [
-      { userId: { $eq: userId } },
+    userId,
+    $or: [
       { name: { $regex: keywordRegex } },
       { category: { $regex: keywordRegex } },
     ],

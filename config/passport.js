@@ -78,7 +78,7 @@ module.exports = (app) => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(profile._json)
+          // console.log(profile._json)
           const { name, email } = profile._json
 
           const foundUser = await User.findOne({ email })
