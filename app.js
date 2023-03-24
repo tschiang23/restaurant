@@ -1,6 +1,7 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
+const session = require('express-session')
 const routes = require('./routes')
 require('./config/mongoose')
 
@@ -22,6 +23,14 @@ app.set('view engine', 'hbs')
 app.use(express.static('public')) //use statie file
 app.use(express.urlencoded({ extended: true })) //body-parser
 app.use(methodOverride('_method')) //use methodOverride
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+
 app.use(routes) //use router
 
 app.listen(port, () => {
