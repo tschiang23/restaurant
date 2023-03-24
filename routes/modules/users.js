@@ -4,7 +4,7 @@ const passport = require('passport')
 
 router.get('/logout', (req, res) => {
   //req.logOut() passport提供的
-  req.logOut(() => res.render('login'))
+  req.logOut(() => res.redirect('/users/login'))
 })
 
 router.get('/login', (req, res) => {
