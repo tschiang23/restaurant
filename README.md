@@ -4,6 +4,8 @@
 
 ### 功能列表
 
+- 使用者可以註冊帳號建立個人的餐廳
+- 支援 Facebook，Google 登入
 - 依照餐廳名稱及餐廳類別搜尋
 - 依照評分、餐廳名稱 排序餐廳
 - 檢視餐廳詳細資訊包含類別、地址、電話、評分、圖片及 Google Map
@@ -27,13 +29,13 @@
 1. 打開你的 terminal，Clone 此專案至本機電腦
 
    ```
-   git clone https://github.com/koheavens/Restaurant-CRUD.git
+   git clone https://github.com/koheavens/restaurant.git
    ```
 
 2. 開啟終端機(Terminal)，進入存放此專案的資料夾
 
    ```
-   cd Restaurant-CRUD
+   cd restaurant
    ```
 
 3. 安裝 npm 套件
