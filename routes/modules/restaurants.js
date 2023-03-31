@@ -48,17 +48,11 @@ router.put('/:id', (req, res) => {
   const userId = req.user._id
   return Restaurant.findById({ _id, userId })
     .then((restaurant) => {
-      for (const key in req.body) {
-        for (const property in restaurant) {
-          if (key === property) {
-            restaurant[property] = req.body[key]
-          }
-        }
-      }
+      Object.assign(restaurant, req.body)
 
       return restaurant.save()
     })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => res.redirect(`/restaurants/${_id}`))
     .catch((error) => console.log(error))
 })
 
