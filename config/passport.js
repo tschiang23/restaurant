@@ -94,23 +94,6 @@ module.exports = (app) => {
           return done(err, false)
         }
 
-        // User.findOne({ googleID: profile.id }).then((foundUser) => {
-        //   if (foundUser) {
-        //     done(null, foundUser)
-        //   } else {
-        //     new User({
-        //       name: profile.displayName,
-        //       googleID: profile.id,
-        //       thumbnail: profile.photos[0].value,
-        //       email: profile.emails[0].value,
-        //     })
-        //       .save()
-        //       .then((newUser) => {
-        //         console.log('New user created')
-        //         done(null, newUser)
-        //       })
-        //   }
-        // })
       }
     )
   )
