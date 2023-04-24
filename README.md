@@ -29,7 +29,7 @@
 1. 打開你的 terminal，Clone 此專案至本機電腦
 
    ```
-   git clone https://github.com/koheavens/restaurant.git
+   git clone https://github.com/tschiang23/restaurant.git
    ```
 
 2. 開啟終端機(Terminal)，進入存放此專案的資料夾
