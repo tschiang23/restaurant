@@ -20,14 +20,14 @@ module.exports = (app) => {
         try {
           const foundUser = await User.findOne({ email })
           if (!foundUser) {
-            return done(null, false, { message: 'Email or password incorrect' })
+            return done(null, false, req.flash('warning_msg', 'Email or password incorrect'))
           }
 
           const isMatch = await bcrypt.compare(password, foundUser.password)
 
           if (!isMatch) {
             //(err,user,{message})
-            return done(null, false, { message: 'Email or password incorrect' })
+            return done(null, false, req.flash('warning_msg', 'Email or password incorrect'))
           }
 
           return done(null, foundUser)
