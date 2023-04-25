@@ -18,7 +18,8 @@
 
 ### 環境建置與需求
 
-- [Node.js](https://nodejs.org/)
+
+- [Node.js](https://nodejs.org/) - 請使用Node.js : 18.15.0
 - [Express](https://expressjs.com/) - 應用程式架構
 - [Express-Handlebars](https://www.npmjs.com/package/express-handlebars) - 模板引擎
 - [MongoDB](https://www.mongodb.com/) - 資料庫
