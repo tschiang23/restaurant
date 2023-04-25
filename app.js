@@ -12,7 +12,7 @@ const userPassport = require('./config/passport')
 const flash = require('connect-flash') // 引用套件
 
 const app = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 
 // handlebars
 app.engine(
