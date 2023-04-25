@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 require('./config/mongoose')
 const express = require('express')
 const { engine } = require('express-handlebars')
@@ -27,7 +31,7 @@ app.use(express.urlencoded({ extended: true })) //body-parser
 app.use(methodOverride('_method')) //use methodOverride
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })

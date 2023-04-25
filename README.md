@@ -26,7 +26,7 @@
 
 ### 安裝
 
-1. 打開你的 terminal，Clone 此專案至本機電腦
+1. 打開 terminal，Clone 此專案至本機電腦
 
    ```
    git clone https://github.com/tschiang23/restaurant.git
@@ -41,10 +41,26 @@
 3. 安裝 npm 套件
 
    ```
-   在Terminal 輸入 npm install 指令
+   npm install
    ```
 
-4. 產生預設使用者及餐廳資料至 MongoDB
+4. 設定.env檔，參考 .env.example
+
+   ```
+   SESSION_SECRET=
+   MONGODB_URI=
+
+   FACEBOOK_ID=
+   FACEBOOK_SECRET=
+   FACEBOOK_CALLBACK=
+
+   GOOGLE_CLIENT_Id = 
+   GOOGLE_CLIENT_SECRET=
+   GOOGLE_CALLBACK = 
+
+   PORT=3000
+   ```
+5. 產生預設使用者及餐廳資料至 MongoDB
 
    ```
    npm run seed  //執行增加資料至 MongoDB
@@ -52,9 +68,6 @@
 
    終端顯示 done 即完成新增資料
 
-   ```
-   Ctrl+C *2  //連按兩下Ctrl+C結束批次工作
-   ```
 
 5. 在 Terminal 輸入
 
